@@ -39,7 +39,7 @@ public class Car {
     @Column(nullable = false)
     private Double price;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
     private Set<Rent> carRents;
 
     @CreatedDate

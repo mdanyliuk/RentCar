@@ -33,7 +33,7 @@ public class User {
     )
     private Long id;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Rent> userRents;
 
     @CreatedDate
