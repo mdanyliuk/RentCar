@@ -5,6 +5,10 @@
     <div class="navbar-nav w-100">
         <a class="navbar-brand text-color" href="/">Rent Car App</a>
     </div>
+    <a sec:authorize="isAnonymous()"
+       class="navbar-brand text-color" th:href="@{/login}">Log in</a>
+    <a sec:authorize="isAuthenticated()"
+       class="navbar-brand text-color" th:href="@{/logout}">Log out</a>
 </nav>
 </body>
 </html>

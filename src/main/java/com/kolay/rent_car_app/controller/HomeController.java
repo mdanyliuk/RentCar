@@ -6,6 +6,8 @@ import com.kolay.rent_car_app.model.User;
 import com.kolay.rent_car_app.service.CarService;
 import com.kolay.rent_car_app.service.RentService;
 import com.kolay.rent_car_app.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +36,25 @@ public class HomeController {
     }
 
     @GetMapping("/rents")
-    public String reservations(Model model, HttpSession session) {
-        User user = userService.get(10000L);
-        session.setAttribute("user", user);
-        Rent rent = new Rent();
-        model.addAttribute("rent", rent);
-        List<Car> cars = carService.findAll();
-        model.addAttribute("cars", cars);
-        return "rents";
+    public String rents(Model model, HttpSession session) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = principal.getUsername();
+        User user = userService.getUserByUsername(name);
+
+        // This should always be the case
+        if (user != null) {
+            session.setAttribute("user", user);
+
+            Rent rent = new Rent();
+            model.addAttribute("rent", rent);
+
+            List<Car> cars = carService.findAll();
+            model.addAttribute("cars", cars);
+
+            return "rents";
+        }
+
+        return "index";
     }
 
     @PostMapping("/rents-submit")

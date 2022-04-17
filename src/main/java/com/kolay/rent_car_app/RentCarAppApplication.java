@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,12 @@ public class RentCarAppApplication {
                                       CarRepository carRepository,
                                       RentRepository rentRepository) {
         return (args) -> {
-            User user = userRepository.save(new User());
+            User user = userRepository.save(new User("John Doe",
+                    "JohnDoe",
+                    bCryptPasswordEncoder().encode("111")));
+            userRepository.save(new User("Bill Smith",
+                    "BillSmith",
+                    bCryptPasswordEncoder().encode("111")));
             Car car = Car.builder()
                     .name("Hyundai Accent")
                     .price(50.0)
@@ -51,5 +57,10 @@ public class RentCarAppApplication {
 
             rentRepository.save(rent);
         };
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
