@@ -1,10 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-$END$
+<div
+        class="modal fade"
+        th:fragment="modal"
+        id="createRentModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="createRentModalTitle"
+        aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createRentModalTitle">
+                    New Rent
+                </h5>
+                <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form
+                        action="#"
+                        th:action="@{/rents-submit}"
+                        th:object="${rent}"
+                        method="post"
+                >
+                    <div class="form-group row">
+                        <label for="type-select" class="col-2 col-form-label"
+                        >Car</label
+                        >
+                        <div class="col-10">
+                            <select
+                                    class="form-control"
+                                    id="car"
+                                    th:field="*{car}"
+                            >
+                                <option th:each="car : ${cars}" th:value="${car.getId()}" th:utext="${car.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="start-date" class="col-2 col-form-label"
+                        >From Date</label
+                        >
+                        <div class="col-10">
+                            <input
+                                    class="form-control"
+                                    type="date"
+                                    id="start-date"
+                                    name="trip-start"
+                                    th:field="*{startDate}"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="start-time" class="col-2 col-form-label"
+                        >From Time</label
+                        >
+                        <div class="col-10">
+                            <input
+                                    class="form-control"
+                                    type="time"
+                                    id="start-time"
+                                    name="time"
+                                    th:field="*{startTime}"
+                                    required
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="end-date" class="col-2 col-form-label"
+                        >To Date</label
+                        >
+                        <div class="col-10">
+                            <input
+                                    class="form-control"
+                                    type="date"
+                                    id="end-date"
+                                    name="trip-start"
+                                    th:field="*{endDate}"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="end-time" class="col-2 col-form-label">To Time</label>
+                        <div class="col-10">
+                            <input
+                                    class="form-control"
+                                    type="time"
+                                    id="end-time"
+                                    name="time"
+                                    th:field="*{endTime}"
+                                    required
+                            />
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" value="Submit">
+                            Save changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

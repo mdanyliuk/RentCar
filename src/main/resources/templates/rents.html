@@ -11,7 +11,7 @@
 <div>
     <div th:insert="fragments/nav :: nav"></div>
     <div class="container" style="padding-top: 10vh; display: flex; flex-direction: column; align-items: center;">
-        <h3>Welcome <span th:text=" ${user.getId()}"></span></h3>
+        <h3>Welcome <span th:text=" ${session.user.getId()}"></span></h3>
         <br>
         <table class="table">
             <thead>
@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="rent : ${user.getUserRents()}">
+            <tr th:each="rent : ${session.user.getUserRents()}">
                 <td th:text="${rent.getCar().getName()}"></td>
                 <td th:text="${rent.getStartDate()}"></td>
                 <td th:text="${rent.getStartTime()}"></td>
@@ -33,6 +33,20 @@
             </tr>
             </tbody>
         </table>
+        <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#createRentModal"
+        >
+            New Rent
+        </button>
+
+        <!-- Modal -->
+        <div
+                th:insert="fragments/modal :: modal"
+                th:with="reservation=${reservation}"
+        ></div>
     </div>
 </div>
 
